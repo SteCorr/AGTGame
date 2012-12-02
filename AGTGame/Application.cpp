@@ -86,6 +86,14 @@ bool Application::worldConfig()
 
 void Application::createScene()
 {
+	//create plane
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 0, 0, 0, Ogre::Vector3::UNIT_Z);
+	Ogre::Entity* entGround = mSceneMgr->createEntity("GroundEntity", "ground");
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
+	entGround->setMaterialName("Examples/Rockwall");
+
+
 	// create player mesh.
 	p = new Player("player", "Sinbad.mesh");
 	p->setPos(0,0,0);
@@ -95,7 +103,9 @@ void Application::createScene()
 	p->entity = mSceneMgr->createEntity(p->getName(), p->getMeshName());
 	p->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerNode", Ogre::Vector3(p->getXpos(), p->getYpos(), p->getZpos()));
 	p->pNode->attachObject(p->entity);
+
 	
+	//Ogre::SceneNode* node = mSceneMgr->createSceneNode("Node1");
 }
 
 void Application::createCamera()
@@ -206,6 +216,7 @@ void Application::windowClosed(Ogre::RenderWindow* rw)
 bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	Ogre::Vector3 translate(0,0,0);
+
     if(mWindow->isClosed())
         return false;
  
@@ -221,21 +232,37 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	if(mKeyboard->isKeyDown(OIS::KC_W))
 	{
 		translate += p->moveForward();
+		p->mAnimationState = p->entity->getAnimationState("RunBase");
+		p->mAnimationState->setLoop(true);
+		p->mAnimationState->setEnabled(true);
+		p->mAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 	// key press for moving backwards
 	if(mKeyboard->isKeyDown(OIS::KC_S))
 	{
 		translate += p->moveBack();
+		p->mAnimationState = p->entity->getAnimationState("RunBase");
+		p->mAnimationState->setLoop(true);
+		p->mAnimationState->setEnabled(true);
+		p->mAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 	// key press for moving to the left
 	if(mKeyboard->isKeyDown(OIS::KC_A))
 	{
 		translate += p->moveLeft();
+		p->mAnimationState = p->entity->getAnimationState("RunBase");
+		p->mAnimationState->setLoop(true);
+		p->mAnimationState->setEnabled(true);
+		p->mAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 	// key press for moving to the right
 	if(mKeyboard->isKeyDown(OIS::KC_D))
 	{
 		translate += p->moveRight();
+		p->mAnimationState = p->entity->getAnimationState("RunBase");
+		p->mAnimationState->setLoop(true);
+		p->mAnimationState->setEnabled(true);
+		p->mAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 
 	p->pNode->translate(translate*evt.timeSinceLastFrame);

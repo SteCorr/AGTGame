@@ -96,11 +96,13 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Terrian.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Terrian.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

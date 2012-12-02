@@ -55,12 +55,12 @@ Ogre::Vector3 Player::moveBack()
 
 Ogre::Vector3 Player::moveRight()
 {
-	return Ogre::Vector3(-10,0,0);
+	return Ogre::Vector3(10,0,0);
 }
 
 Ogre::Vector3 Player::moveLeft()
 {
-	return Ogre::Vector3(10,0,0);
+	return Ogre::Vector3(-10,0,0);
 }
 
 void Player::Scene()
@@ -68,6 +68,6 @@ void Player::Scene()
 	
 }
 
-Player::~Player(void)
+Player::~Player()
 {
 }

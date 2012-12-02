@@ -8,9 +8,11 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 #include <OgreWindowEventUtilities.h>
+#include <Terrain/OgreTerrain.h>
+#include <Terrain/OgreTerrainGroup.h>
 #include "BaseObject.h"
 #include "Player.h"
-
+#include <OgreMeshManager.h>
 
  
 class Application : public Ogre::WindowEventListener, public Ogre::FrameListener

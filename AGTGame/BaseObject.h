@@ -18,7 +18,10 @@ using namespace std;
 class BaseObject : public Ogre::WindowEventListener, public Ogre::FrameListener
 {
 public:
+	Ogre::String pName;
+	Ogre::String pMesh;
 	Ogre::Entity* entity;
+	Ogre::AnimationState* mAnimationState;
 	Ogre::SceneNode* pNode;
 	BaseObject(){};
 	virtual void Scene()=0;
