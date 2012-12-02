@@ -87,12 +87,11 @@ bool Application::worldConfig()
 void Application::createScene()
 {
 	//create plane
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 0, 0, 0, Ogre::Vector3::UNIT_Z);
-	Ogre::Entity* entGround = mSceneMgr->createEntity("GroundEntity", "ground");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
-	entGround->setMaterialName("Examples/Rockwall");
-
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
+	Ogre::MeshManager::getSingleton().createPlane("plane", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5,Ogre::Vector3::UNIT_Z);
+	Ogre::Entity* ent = mSceneMgr->createEntity("LightPlaneEntity", "plane");
+	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+	ent->setMaterialName("Examples/BeachStones");
 
 	// create player mesh.
 	p = new Player("player", "Sinbad.mesh");
