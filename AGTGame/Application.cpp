@@ -86,6 +86,8 @@ bool Application::worldConfig()
 
 void Application::createScene()
 {
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	//create plane
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -5);
 	Ogre::MeshManager::getSingleton().createPlane("plane", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5,Ogre::Vector3::UNIT_Z);
@@ -96,15 +98,18 @@ void Application::createScene()
 	// create player mesh.
 	p = new Player("player", "Sinbad.mesh");
 	p->setPos(0,0,0);
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
-	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	// Create an Entity
 	p->entity = mSceneMgr->createEntity(p->getName(), p->getMeshName());
 	p->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerNode", Ogre::Vector3(p->getXpos(), p->getYpos(), p->getZpos()));
 	p->pNode->attachObject(p->entity);
 
-	
-	//Ogre::SceneNode* node = mSceneMgr->createSceneNode("Node1");
+	//creat enemy mesh
+	e = new Enemy("Enemy", "ninja.mesh");
+	e->entity = mSceneMgr->createEntity(e->getName(), e->getMeshName());
+	e->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("EnemyNode", Ogre::Vector3(0, 0, 0));
+	e->pNode->attachObject(e->entity);
+	e->pNode->setScale(0.05f,0.05f,0.05f);
+	e->pNode->setPosition(0,-5,0);
 }
 
 void Application::createCamera()
@@ -115,7 +120,7 @@ void Application::createCamera()
     // Position it at 500 in Z direction
     mCamera->setPosition(Ogre::Vector3(0,0,100));
     // Look back along -Z
-	mCamera->lookAt(Ogre::Vector3(0,0,-100));
+	mCamera->lookAt(Ogre::Vector3(0,0,0));
     mCamera->setNearClipDistance(5);
 }
 

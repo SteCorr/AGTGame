@@ -12,6 +12,7 @@
 #include <Terrain/OgreTerrainGroup.h>
 #include "BaseObject.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <OgreMeshManager.h>
 
  
@@ -52,6 +53,7 @@ private:
     OIS::Keyboard* mKeyboard;
 
 	Player* p;
+	Enemy* e;
 };
  
 #endif // 
