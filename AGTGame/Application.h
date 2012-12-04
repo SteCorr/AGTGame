@@ -13,6 +13,7 @@
 #include "BaseObject.h"
 #include "Player.h"
 #include "Enemy.h"
+
 #include <OgreMeshManager.h>
 
  
@@ -54,6 +55,7 @@ private:
 
 	Player* p;
 	Enemy* e;
+	
 };
  
 #endif // 

@@ -102,6 +102,7 @@ void Application::createScene()
 	p->entity = mSceneMgr->createEntity(p->getName(), p->getMeshName());
 	p->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerNode", Ogre::Vector3(p->getXpos(), p->getYpos(), p->getZpos()));
 	p->pNode->attachObject(p->entity);
+	p->pNode->showBoundingBox(p->entity);
 
 	//creat enemy mesh
 	e = new Enemy("Enemy", "ninja.mesh");
@@ -110,6 +111,7 @@ void Application::createScene()
 	e->pNode->attachObject(e->entity);
 	e->pNode->setScale(0.05f,0.05f,0.05f);
 	e->pNode->setPosition(0,-5,0);
+	e->pNode->showBoundingBox(e->entity);
 }
 
 void Application::createCamera()
@@ -236,42 +238,34 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	if(mKeyboard->isKeyDown(OIS::KC_W))
 	{
 		translate += p->moveForward();
-		p->mAnimationState = p->entity->getAnimationState("RunBase");
-		p->mAnimationState->setLoop(true);
-		p->mAnimationState->setEnabled(true);
-		p->mAnimationState->addTime(evt.timeSinceLastFrame);
+		p->animate(evt);	
+		p->pNode->setOrientation(0,0,1,0);
 	}
+
 	// key press for moving backwards
 	if(mKeyboard->isKeyDown(OIS::KC_S))
 	{
 		translate += p->moveBack();
-		p->mAnimationState = p->entity->getAnimationState("RunBase");
-		p->mAnimationState->setLoop(true);
-		p->mAnimationState->setEnabled(true);
-		p->mAnimationState->addTime(evt.timeSinceLastFrame);
+		p->animate(evt);
+		p->pNode->resetOrientation();
 	}
 	// key press for moving to the left
 	if(mKeyboard->isKeyDown(OIS::KC_A))
 	{
 		translate += p->moveLeft();
-		p->mAnimationState = p->entity->getAnimationState("RunBase");
-		p->mAnimationState->setLoop(true);
-		p->mAnimationState->setEnabled(true);
-		p->mAnimationState->addTime(evt.timeSinceLastFrame);
+		p->animate(evt);
+		p->pNode->setOrientation(-1,0,1,0);
 	}
 	// key press for moving to the right
 	if(mKeyboard->isKeyDown(OIS::KC_D))
 	{
 		translate += p->moveRight();
-		p->mAnimationState = p->entity->getAnimationState("RunBase");
-		p->mAnimationState->setLoop(true);
-		p->mAnimationState->setEnabled(true);
-		p->mAnimationState->addTime(evt.timeSinceLastFrame);
+		p->animate(evt);
+		p->pNode->setOrientation(1,0,1,0);
 	}
 
 	p->pNode->translate(translate*evt.timeSinceLastFrame);
 
-	
     return true;
 }
  

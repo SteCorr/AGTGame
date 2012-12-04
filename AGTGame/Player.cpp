@@ -68,6 +68,19 @@ void Player::Scene()
 	
 }
 
+void Player::animate(const Ogre::FrameEvent& evt)
+{
+	mAnimationState = entity->getAnimationState("RunBase");
+	mAnimationState2 = entity->getAnimationState("RunTop");
+	mAnimationState->setLoop(true);
+	mAnimationState2->setLoop(true);
+	mAnimationState->setEnabled(true);
+	mAnimationState2->setEnabled(true);
+	mAnimationState->addTime(evt.timeSinceLastFrame);
+	mAnimationState2->addTime(evt.timeSinceLastFrame);
+}
+
+
 Player::~Player()
 {
 }
