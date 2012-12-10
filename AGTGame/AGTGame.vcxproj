@@ -97,6 +97,8 @@
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameDomain.cpp" />
+    <ClCompile Include="OcPart.cpp" />
+    <ClCompile Include="OcTree.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Terrian.cpp" />
   </ItemGroup>
@@ -104,6 +106,8 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="OcPart.h" />
+    <ClInclude Include="OcTree.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Terrian.h" />
     <ClInclude Include="vector.h" />

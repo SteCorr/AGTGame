@@ -3,19 +3,15 @@
 #include "BaseObject.h"
 
 
-class Player:public BaseObject
+class Player : BaseObject
 {
 	int xPos;
 	int yPos; 
 	int zPos;
-	OIS::Keyboard* pKeyboard;
 
 public:
-	Ogre::Vector3 translate;
-	Ogre::AnimationState* mAnimationState;
-	Ogre::AnimationState* mAnimationState2;
-	Player(void);
-	Player(Ogre::String name, Ogre::String mesh);
+	Player(int ID);
+	Player(Ogre::String name, Ogre::String mesh, int ID);
 	Ogre::String getName();
 	Ogre::String getMeshName();
 	void setPos(int X, int Y, int Z);
@@ -28,6 +24,8 @@ public:
 	Ogre::Vector3 moveRight();
 	void Scene();
 	void animate(const Ogre::FrameEvent& evt);
+	void attackAnimation(const Ogre::FrameEvent& evt);
+	void jumpAnimation(const Ogre::FrameEvent& evt);
 	~Player();
 };
 

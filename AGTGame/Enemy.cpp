@@ -1,14 +1,18 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(void)
+Enemy::Enemy(int ID)
 {
+	type = TYPE_ENEMY;
+	id = ID;
 }
 
-Enemy::Enemy(Ogre::String name, Ogre::String mesh)
+Enemy::Enemy(Ogre::String name, Ogre::String mesh, int ID)
 {
+	type = TYPE_ENEMY;
 	pName = name;
 	pMesh = mesh;
+	id = ID;
 }
 
 Ogre::String Enemy::getName()

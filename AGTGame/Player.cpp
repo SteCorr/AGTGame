@@ -1,14 +1,18 @@
 #include "Player.h"
 
 
-Player::Player(void)
+Player::Player(int ID)
 {
+	type = TYPE_PLAYER;
+	id = ID;
 }
 
-Player::Player(Ogre::String name, Ogre::String mesh)
+Player::Player(Ogre::String name, Ogre::String mesh, int ID)
 {
+	type = TYPE_PLAYER;
 	pName = name;
 	pMesh = mesh;
+	id = ID;
 }
 
 Ogre::String Player::getName()
@@ -80,6 +84,21 @@ void Player::animate(const Ogre::FrameEvent& evt)
 	mAnimationState2->addTime(evt.timeSinceLastFrame);
 }
 
+void Player::attackAnimation(const Ogre::FrameEvent& evt)
+{
+	mAttack = entity->getAnimationState("SliceVertical");
+	mAttack->setLoop(true);
+	mAttack->setEnabled(true);
+	mAttack->addTime(evt.timeSinceLastFrame);
+}
+
+void Player::jumpAnimation(const Ogre::FrameEvent& evt)
+{
+	mJump = entity->getAnimationState("JumpStart");
+	mJump->setLoop(true);
+	mJump->setEnabled(true);
+	mJump->addTime(evt.timeSinceLastFrame);
+}
 
 Player::~Player()
 {

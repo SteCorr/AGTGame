@@ -4,8 +4,8 @@
 class Terrian: public BaseObject
 {
 public:
-	Terrian();
-	Terrian(Ogre::String name, Ogre::String mesh);
+	Terrian(int id);
+	Terrian(Ogre::String name, Ogre::String mesh, int id);
 	void Scene();
 	~Terrian();
 };

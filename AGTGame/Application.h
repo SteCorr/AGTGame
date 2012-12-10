@@ -7,25 +7,36 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
+#include <OgreBitwise.h>
 #include <OgreWindowEventUtilities.h>
 #include <Terrain/OgreTerrain.h>
 #include <Terrain/OgreTerrainGroup.h>
 #include "BaseObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "OcTree.h" 
 
 #include <OgreMeshManager.h>
+
+const int MAP_X = 32;
+const int MAP_Z = 32;
+const float MAP_Y = 255.0f;  //max y hgt
+const float MAP_SCALE = 32.0f;  //scale
+const int NBR_LEVELS = 1;
 
  
 class Application : public Ogre::WindowEventListener, public Ogre::FrameListener
 {
 public:
+	OcTree* tree;
     Application(void);
 	bool worldConfig();
 	void createScene();
 	void createCamera();
 	void createViewpoint();
 	void createLight();
+	void UpdateCamera();
+
     virtual ~Application(void);
     bool go(void);
  

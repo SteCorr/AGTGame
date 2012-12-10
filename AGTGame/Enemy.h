@@ -3,8 +3,8 @@
 class Enemy : public BaseObject
 {
 public:
-	Enemy(void);
-	Enemy(Ogre::String name, Ogre::String mesh);
+	Enemy(int ID);
+	Enemy(Ogre::String name, Ogre::String mesh, int ID);
 	Ogre::String getName();
 	Ogre::String getMeshName();
 	virtual void Scene();

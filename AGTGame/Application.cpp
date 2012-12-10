@@ -82,6 +82,9 @@ bool Application::worldConfig()
  
     // Create the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
+	// Create the OcTree for the collisions.
+	tree = new OcTree();
+	tree->BuildFullTree(NBR_LEVELS, 0, 0, 0, MAP_X*MAP_SCALE, MAP_Y, MAP_Z*MAP_SCALE);
 }
 
 void Application::createScene()
@@ -96,34 +99,39 @@ void Application::createScene()
 	ent->setMaterialName("Examples/BeachStones");
 
 	// create player mesh.
-	p = new Player("player", "Sinbad.mesh");
+	p = new Player("player", "Sinbad.mesh", 1);
 	p->setPos(0,0,0);
 	// Create an Entity
 	p->entity = mSceneMgr->createEntity(p->getName(), p->getMeshName());
 	p->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerNode", Ogre::Vector3(p->getXpos(), p->getYpos(), p->getZpos()));
 	p->pNode->attachObject(p->entity);
 	p->pNode->showBoundingBox(p->entity);
-
+	tree->addObject(p);
 	//creat enemy mesh
-	e = new Enemy("Enemy", "ninja.mesh");
+	e = new Enemy("Enemy", "ninja.mesh", 2);
 	e->entity = mSceneMgr->createEntity(e->getName(), e->getMeshName());
 	e->pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("EnemyNode", Ogre::Vector3(0, 0, 0));
 	e->pNode->attachObject(e->entity);
 	e->pNode->setScale(0.05f,0.05f,0.05f);
 	e->pNode->setPosition(0,-5,0);
 	e->pNode->showBoundingBox(e->entity);
+	tree->addObject(e);
 }
 
 void Application::createCamera()
 {
 	 // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
- 
-    // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,0,100));
-    // Look back along -Z
-	mCamera->lookAt(Ogre::Vector3(0,0,0));
+	UpdateCamera();
     mCamera->setNearClipDistance(5);
+}
+
+void Application::UpdateCamera()
+{
+	  // Position it at 500 in Z direction
+    mCamera->setPosition(Ogre::Vector3(mSceneMgr->getSceneNode("PlayerNode")->getPosition().x,0,mSceneMgr->getSceneNode("PlayerNode")->getPosition().z + 50));
+    // Look back along -Z
+	mCamera->lookAt(Ogre::Vector3(mSceneMgr->getSceneNode("PlayerNode")->getPosition().x, mSceneMgr->getSceneNode("PlayerNode")->getPosition().y, mSceneMgr->getSceneNode("PlayerNode")->getPosition().z));
 }
 
 void Application::createViewpoint()
@@ -154,12 +162,13 @@ bool Application::go(void)
 #endif
 	// World Configaration
 	worldConfig();
+	// Create a scene 
+	createScene();
 	// Create a camera
 	createCamera();
 	// Create a view point
     createViewpoint();
-	// Create a scene 
-	createScene();
+	
     // Create a light
 	createLight();
     
@@ -240,6 +249,7 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		translate += p->moveForward();
 		p->animate(evt);	
 		p->pNode->setOrientation(0,0,1,0);
+		UpdateCamera();
 	}
 
 	// key press for moving backwards
@@ -248,6 +258,8 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		translate += p->moveBack();
 		p->animate(evt);
 		p->pNode->resetOrientation();
+		UpdateCamera();
+
 	}
 	// key press for moving to the left
 	if(mKeyboard->isKeyDown(OIS::KC_A))
@@ -255,6 +267,7 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		translate += p->moveLeft();
 		p->animate(evt);
 		p->pNode->setOrientation(-1,0,1,0);
+		UpdateCamera();
 	}
 	// key press for moving to the right
 	if(mKeyboard->isKeyDown(OIS::KC_D))
@@ -262,8 +275,40 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		translate += p->moveRight();
 		p->animate(evt);
 		p->pNode->setOrientation(1,0,1,0);
+		UpdateCamera();
 	}
-
+	if(mKeyboard->isKeyDown(OIS::KC_W) && mKeyboard->isKeyDown(OIS::KC_D))
+	{
+		p->animate(evt);
+		p->pNode->setOrientation(1,0,2,0);
+		UpdateCamera();
+	}
+	if(mKeyboard->isKeyDown(OIS::KC_W) && mKeyboard->isKeyDown(OIS::KC_A))
+	{
+		p->animate(evt);
+		p->pNode->setOrientation(1,0,-2,0);
+		UpdateCamera();
+	}
+	if(mKeyboard->isKeyDown(OIS::KC_S) && mKeyboard->isKeyDown(OIS::KC_D))
+	{
+		p->animate(evt);
+		p->pNode->setOrientation(2,0,1,0);
+		UpdateCamera();
+	}
+	if(mKeyboard->isKeyDown(OIS::KC_S) && mKeyboard->isKeyDown(OIS::KC_A))
+	{
+		p->animate(evt);
+		p->pNode->setOrientation(-2,0,1,0);
+		UpdateCamera();
+	}
+	if(mKeyboard->isKeyDown(OIS::KC_RETURN))
+	{
+		p->attackAnimation(evt);
+	}
+	if(mKeyboard->isKeyDown(OIS::KC_SPACE))
+	{
+		p->jumpAnimation(evt);
+	}
 	p->pNode->translate(translate*evt.timeSinceLastFrame);
 
     return true;
