@@ -3,13 +3,17 @@
 #include "BaseObject.h"
 
 
-class Player : BaseObject
+class Player : public BaseObject
 {
 	int xPos;
 	int yPos; 
 	int zPos;
 
 public:
+	Ogre::AnimationState* mAnimationState;
+	Ogre::AnimationState* mAnimationState2;
+	Ogre::AnimationState* mAttack;
+	Ogre::AnimationState* mJump;
 	Player(int ID);
 	Player(Ogre::String name, Ogre::String mesh, int ID);
 	Ogre::String getName();

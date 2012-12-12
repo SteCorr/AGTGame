@@ -1,16 +1,12 @@
 #include "Terrian.h"
 
 
-Terrian::Terrian(int id)
+Terrian::Terrian(int ID):BaseObject(ID)
 {
-	id = id;
 }
 
-Terrian::Terrian(Ogre::String name, Ogre::String mesh, int id)
+Terrian::Terrian(Ogre::String name, Ogre::String mesh, int ID):BaseObject(name, mesh, ID)
 {
-	pName = name;
-	pMesh = mesh;
-	id = id;
 }
 
 void Terrian::Scene()

@@ -1,18 +1,14 @@
 #include "Player.h"
 
 
-Player::Player(int ID)
+Player::Player(int ID):BaseObject(ID)
 {
 	type = TYPE_PLAYER;
-	id = ID;
 }
 
-Player::Player(Ogre::String name, Ogre::String mesh, int ID)
+Player::Player(Ogre::String name, Ogre::String mesh, int ID):BaseObject( name, mesh, ID)
 {
 	type = TYPE_PLAYER;
-	pName = name;
-	pMesh = mesh;
-	id = ID;
 }
 
 Ogre::String Player::getName()

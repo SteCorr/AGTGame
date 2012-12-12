@@ -1,5 +1,17 @@
 #include "BaseObject.h"
 
+BaseObject::BaseObject(int ID)
+{
+	id = ID;
+}
+
+BaseObject::BaseObject(Ogre::String name, Ogre::String mesh, int ID)
+{
+	pName = name;
+	pMesh = mesh;
+	id = ID;
+}
+
 bool BaseObject::collidesWith(BaseObject* obj)
 {
 	if(pNode->getPosition().x + entity->getBoundingBox().getMaximum().x < obj->pNode->getPosition().x + obj->entity->getBoundingBox().getMaximum().x)
