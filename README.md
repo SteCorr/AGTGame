@@ -16,4 +16,4 @@ with a packable object the player will pick this object up, this is only if the 
 the inventory. The player will also only be allowed to attack an enemy when they have a weapon to do so. 
 
 All object class (e.g. player, enemy and packable objects) will derive form a base object class. 
-This is because all this class will have similar functionality. 
+This is because all this class will have similar functionality.  
